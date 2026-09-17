@@ -20,7 +20,12 @@ class OrderTotalsTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected bool $seed = true;
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->seed();
+    }
 
     private function placeOrder(Product $product, int $quantity = 2): Order
     {

@@ -16,7 +16,12 @@ class SeedDataTest extends TestCase
 {
     use RefreshDatabase;
 
-    protected bool $seed = true;
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->seed();
+    }
 
     public function test_the_catalog_is_seeded(): void
     {
