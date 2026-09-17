@@ -49,7 +49,7 @@
                             @foreach ($categories as $category)
                                 <div class="swiper-slide" lazy="true">
                                     <div class="collection-item-v2 type-small hover-img">
-                                        <a href="{{ url('/category/'.$category->slug) }}" class="collection-inner">
+                                        <a href="{{ route('category', $category) }}" class="collection-inner">
                                             <div class="collection-image img-style radius-10">
                                                 <img class="lazyload" data-src="{{ asset($category->image) }}"
                                                     src="{{ asset($category->image) }}" alt="{{ $category->name }}">

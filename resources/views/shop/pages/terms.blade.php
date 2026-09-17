@@ -62,7 +62,7 @@
                 <p>
                     - **Order Cancellation:** Orders may be cancelled before they are shipped. Once an order has been shipped, it cannot be cancelled.<br>
                     - **Cancellation Process:** To cancel an order, please use the cancel order button in your account dashboard.<br>
-                    - **Issues and Support:** If you experience any problems with cancellation or have other order-related concerns, please contact us through our <a href="contact.php">Contact Us</a> page.
+                    - **Issues and Support:** If you experience any problems with cancellation or have other order-related concerns, please contact us through our <a href="{{ route('contact') }}">Contact Us</a> page.
                 </p>
 
                 <h4 class="mb-0">9. User Responsibilities</h4>
@@ -83,7 +83,7 @@
                     use or inability to use our website or products.</p>
 
                 <h4 class="mb-0">12. Privacy Policy</h4>
-                <p>Your privacy is important to us. Please refer to our <a href="privacy-policy.php">Privacy Policy</a> to understand how
+                <p>Your privacy is important to us. Please refer to our <a href="{{ route('privacy') }}">Privacy Policy</a> to understand how
                     we collect, use, and protect your personal information.</p>
 
                 <h4 class="mb-0">13. Modifications to Terms</h4>
