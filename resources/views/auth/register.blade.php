@@ -1,46 +1,58 @@
-@extends('layouts.app')
+@extends('layouts.shop')
 
-@section('title', 'Create account')
+@section('title', 'Sign up')
 
 @section('content')
-    <div class="card narrow">
-        <h1>Create account</h1>
-        <p class="sub">Order pet food from trusted suppliers.</p>
+    @include('partials.storefront.page-title', ['title' => 'Sign up'])
 
-        <form method="POST" action="{{ route('register.store') }}">
-            @csrf
+    <section class="flat-spacing-11">
+        <div class="container">
+            <div class="tf-login-form">
+                @if ($errors->any())
+                    <div class="callout callout-danger text-center">
+                        <p>{{ $errors->first() }}</p>
+                    </div>
+                @endif
 
-            <div class="row">
-                <div>
-                    <label for="firstname">First name</label>
-                    <input id="firstname" name="firstname" value="{{ old('firstname') }}" required autofocus>
-                    @error('firstname')<div class="field-error">{{ $message }}</div>@enderror
-                </div>
-                <div>
-                    <label for="lastname">Last name</label>
-                    <input id="lastname" name="lastname" value="{{ old('lastname') }}" required>
-                    @error('lastname')<div class="field-error">{{ $message }}</div>@enderror
-                </div>
+                <form action="{{ route('register.store') }}" method="POST">
+                    @csrf
+                    <div class="tf-field style-1 mb-2">
+                        <input class="tf-field-input tf-input" placeholder=" " type="text" name="firstname"
+                            value="{{ old('firstname') }}" required>
+                        <label class="tf-field-label">First name</label>
+                    </div>
+                    <div class="tf-field style-1 mb-2">
+                        <input class="tf-field-input tf-input" placeholder=" " type="text" name="lastname"
+                            value="{{ old('lastname') }}" required>
+                        <label class="tf-field-label">Last name</label>
+                    </div>
+                    <div class="tf-field style-1 mb-2">
+                        <input class="tf-field-input tf-input" placeholder=" " type="email" name="email"
+                            value="{{ old('email') }}" required autocomplete="email">
+                        <label class="tf-field-label">Email *</label>
+                    </div>
+                    <div class="tf-field style-1 mb-2">
+                        <input class="tf-field-input tf-input" placeholder=" " type="password" name="password" required
+                            autocomplete="new-password">
+                        <label class="tf-field-label">Password *</label>
+                    </div>
+
+                    <div class="bottom">
+                        <div class="w-100">
+                            <button type="submit"
+                                class="tf-btn btn-fill animate-hover-btn radius-3 w-100 justify-content-center">
+                                <span>Signup</span>
+                            </button>
+                        </div>
+                        <div class="w-100">
+                            <a href="{{ route('login') }}" class="btn-link fw-6 w-100 link">
+                                Already have an account? Log in here
+                                <i class="icon icon-arrow1-top-left"></i>
+                            </a>
+                        </div>
+                    </div>
+                </form>
             </div>
-
-            <label for="email">Email</label>
-            <input id="email" name="email" type="email" value="{{ old('email') }}" required autocomplete="email">
-            @error('email')<div class="field-error">{{ $message }}</div>@enderror
-
-            <label for="phone">Phone <span style="font-weight:400;color:var(--muted)">(optional)</span></label>
-            <input id="phone" name="phone" value="{{ old('phone') }}" autocomplete="tel">
-            @error('phone')<div class="field-error">{{ $message }}</div>@enderror
-
-            <label for="password">Password</label>
-            <input id="password" name="password" type="password" required autocomplete="new-password">
-            @error('password')<div class="field-error">{{ $message }}</div>@enderror
-
-            <label for="password_confirmation">Confirm password</label>
-            <input id="password_confirmation" name="password_confirmation" type="password" required autocomplete="new-password">
-
-            <button type="submit">Create account</button>
-        </form>
-
-        <p class="foot">Already registered? <a href="{{ route('login') }}">Sign in</a></p>
-    </div>
+        </div>
+    </section>
 @endsection
