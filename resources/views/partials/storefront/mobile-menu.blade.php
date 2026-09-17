@@ -25,7 +25,7 @@
                     </div>
                 </li>
                 <li class="nav-mb-item">
-                    <a href="{{ url('/shop') }}" class="mb-menu-link"><span>Shop</span></a>
+                    <a href="{{ route('shop') }}" class="mb-menu-link"><span>Shop</span></a>
                 </li>
                 <li class="nav-mb-item">
                     <a href="{{ route('about') }}" class="mb-menu-link"><span>About Us</span></a>
@@ -36,7 +36,7 @@
             </ul>
 
             <div class="mb-other-content">
-                <form class="tf-mini-search-frm mb-2 mt-3" method="GET" action="{{ url('/search') }}">
+                <form class="tf-mini-search-frm mb-2 mt-3" method="GET" action="{{ route('search') }}">
                     <fieldset class="text">
                         <input type="text" placeholder="Search" name="keyword" tabindex="0"
                             value="{{ request('keyword') }}" aria-required="true" required>

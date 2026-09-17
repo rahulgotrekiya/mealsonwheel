@@ -1,6 +1,6 @@
 <div class="tf-toolbar-bottom type-1150">
     <div class="toolbar-item">
-        <a href="{{ url('/shop') }}">
+        <a href="{{ route('shop') }}">
             <div class="toolbar-icon"><i class="icon-shop"></i></div>
             <div class="toolbar-label">Shop</div>
         </a>

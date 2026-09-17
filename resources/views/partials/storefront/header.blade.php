@@ -18,7 +18,7 @@
                 </div>
                 <div class="col-md-4 col-6 tf-md-hidden">
                     <div class="tf-form-search">
-                        <form method="GET" action="{{ url('/search') }}" class="search-box">
+                        <form method="GET" action="{{ route('search') }}" class="search-box">
                             <input type="text" placeholder="Search product" name="keyword"
                                 value="{{ request('keyword') }}" required>
                             <button class="tf-btn"><i class="icon icon-search"></i></button>
@@ -100,7 +100,7 @@
                             @include('partials.storefront.category-links')
 
                             <div class="categories-bottom">
-                                <a href="{{ url('/shop') }}" class="tf-btn btn-line collection-other-link">
+                                <a href="{{ route('shop') }}" class="tf-btn btn-line collection-other-link">
                                     <span>View all collection</span><i class="icon icon-arrow1-top-left"></i>
                                 </a>
                             </div>
@@ -109,7 +109,7 @@
                     <nav class="box-navigation text-center">
                         <ul class="box-nav-ul d-flex align-items-center justify-content-center gap-30">
                             <li class="menu-item"><a href="{{ route('home') }}" class="item-link">Home</a></li>
-                            <li class="menu-item"><a href="{{ url('/shop') }}" class="item-link">Shop</a></li>
+                            <li class="menu-item"><a href="{{ route('shop') }}" class="item-link">Shop</a></li>
                             <li class="menu-item"><a href="{{ route('about') }}" class="item-link">About Us</a></li>
                             <li class="menu-item position-relative"><a href="{{ route('contact') }}"
                                     class="item-link">Contact Us</a></li>

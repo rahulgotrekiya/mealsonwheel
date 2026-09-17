@@ -2,12 +2,23 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Shop\CatalogController;
 use App\Http\Controllers\Shop\ContactController;
 use App\Http\Controllers\Shop\HomeController;
 use App\Http\Controllers\Shop\NewsletterController;
+use App\Http\Controllers\Shop\SearchController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeController::class)->name('home');
+
+/*
+ * Catalog. Categories and products are addressed by slug rather than id, so the
+ * URLs read as names and stay stable if rows are ever renumbered.
+ */
+Route::get('/shop', [CatalogController::class, 'index'])->name('shop');
+Route::get('/category/{category}', [CatalogController::class, 'category'])->name('category');
+Route::get('/product/{product}', [CatalogController::class, 'product'])->name('product');
+Route::get('/search', SearchController::class)->name('search');
 
 Route::view('/about', 'shop.pages.about')->name('about');
 Route::view('/privacy-policy', 'shop.pages.privacy')->name('privacy');

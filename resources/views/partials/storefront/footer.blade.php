@@ -44,7 +44,7 @@
                         </div>
                         <ul class="footer-menu-list tf-collapse-content">
                             <li><a href="{{ route('home') }}" class="footer-menu_item">Home</a></li>
-                            <li><a href="{{ url('/shop') }}" class="footer-menu_item">Shop</a></li>
+                            <li><a href="{{ route('shop') }}" class="footer-menu_item">Shop</a></li>
                             <li><a href="{{ route('about') }}" class="footer-menu_item">About Us</a></li>
                             <li><a href="{{ route('contact') }}" class="footer-menu_item">Contact Us</a></li>
                         </ul>
