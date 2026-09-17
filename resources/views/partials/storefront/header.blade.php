@@ -70,7 +70,7 @@
                         {{-- Only customers buy, so staff accounts do not carry a basket. --}}
                         @unless (auth()->check() && ! auth()->user()->isCustomer())
                             <li class="nav-cart cart-lg" id="cartItem">
-                                <a href="{{ url('/cart') }}" class="nav-icon-item">
+                                <a href="{{ route('cart') }}" class="nav-icon-item">
                                     <i class="icon icon-bag"></i>
                                     <span class="count-box cart_count"></span>
                                 </a>
