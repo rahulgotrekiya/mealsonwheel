@@ -18,7 +18,7 @@
         </a>
     </div>
     <div class="toolbar-item">
-        <a href="{{ url('/cart') }}">
+        <a href="{{ route('cart') }}">
             <div class="toolbar-icon">
                 <i class="icon-bag"></i>
                 <div class="toolbar-count cart_count"></div>

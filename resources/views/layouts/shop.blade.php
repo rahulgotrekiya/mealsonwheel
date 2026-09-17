@@ -56,6 +56,29 @@
         $.ajaxSetup({
             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') }
         });
+
+        // Keeps the basket badge in the header and the mobile toolbar in step.
+        function getCart() {
+            $.post('{{ route('cart.fetch') }}', function (response) {
+                $('.cart_count').text(response.total_quantity || '');
+            }, 'json');
+        }
+
+        $(function () {
+            getCart();
+
+            $('#productForm').on('submit', function (e) {
+                e.preventDefault();
+
+                $.post('{{ route('cart.add') }}', $(this).serialize(), function (response) {
+                    alert(response.message);
+
+                    if (!response.error) {
+                        getCart();
+                    }
+                }, 'json');
+            });
+        });
     </script>
 
     @stack('scripts')
