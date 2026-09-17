@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
+use App\Support\Cart;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -55,6 +56,9 @@ class LoginController extends Controller
 
         // Issues a new session id, so a session fixed before sign-in is useless.
         $request->session()->regenerate();
+
+        // A basket built before signing in belongs to this account now.
+        app(Cart::class)->mergeGuestBasket();
 
         return redirect()->intended($user->role->home());
     }
