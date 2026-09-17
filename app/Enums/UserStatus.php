@@ -25,4 +25,16 @@ enum UserStatus: string
             self::Suspended => 'bg-danger-subtle text-danger',
         };
     }
+
+    /**
+     * Why a user in this state cannot sign in.
+     */
+    public function blockedMessage(): string
+    {
+        return match ($this) {
+            self::Pending => 'Your merchant account is awaiting approval. We will email you once an administrator has reviewed it.',
+            self::Suspended => 'This account has been suspended. Please contact support.',
+            self::Active => '',
+        };
+    }
 }
