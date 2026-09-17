@@ -15,7 +15,7 @@ class AuthenticationTest extends TestCase
 
     public function test_the_sign_in_page_renders(): void
     {
-        $this->get('/login')->assertOk()->assertSee('Sign in');
+        $this->get('/login')->assertOk()->assertSee('Log in');
     }
 
     public function test_a_customer_can_sign_in_and_lands_on_the_storefront(): void
