@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Shop\CartController;
 use App\Http\Controllers\Shop\CatalogController;
 use App\Http\Controllers\Shop\ContactController;
 use App\Http\Controllers\Shop\HomeController;
@@ -19,6 +20,21 @@ Route::get('/shop', [CatalogController::class, 'index'])->name('shop');
 Route::get('/category/{category}', [CatalogController::class, 'category'])->name('category');
 Route::get('/product/{product}', [CatalogController::class, 'product'])->name('product');
 Route::get('/search', SearchController::class)->name('search');
+
+/*
+ * The basket.
+ *
+ * Open to signed-out visitors by design: a guest builds a basket in the session
+ * and it is folded into their account the moment they sign in. Every write is
+ * scoped to the caller inside the Cart service.
+ */
+Route::get('/cart', [CartController::class, 'index'])->name('cart');
+Route::post('/cart/add', [CartController::class, 'add'])->name('cart.add');
+Route::post('/cart/update', [CartController::class, 'update'])->name('cart.update');
+Route::post('/cart/remove', [CartController::class, 'remove'])->name('cart.remove');
+Route::post('/cart/fetch', [CartController::class, 'fetch'])->name('cart.fetch');
+Route::post('/cart/details', [CartController::class, 'details'])->name('cart.details');
+Route::post('/cart/total', [CartController::class, 'total'])->name('cart.total');
 
 Route::view('/about', 'shop.pages.about')->name('about');
 Route::view('/privacy-policy', 'shop.pages.privacy')->name('privacy');
