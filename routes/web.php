@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Shop\AccountController;
@@ -81,7 +82,7 @@ Route::post('/register', [RegisterController::class, 'store'])->name('register.s
 Route::post('/logout', [LoginController::class, 'destroy'])->middleware('auth')->name('logout');
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::view('/', 'admin.dashboard')->name('dashboard');
+    Route::get('/', AdminDashboard::class)->name('dashboard');
 });
 
 Route::middleware(['auth', 'role:merchant'])->prefix('merchant')->name('merchant.')->group(function () {

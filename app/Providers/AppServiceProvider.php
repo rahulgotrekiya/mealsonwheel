@@ -5,6 +5,7 @@ namespace App\Providers;
 use App\Models\Category;
 use App\Models\Order;
 use App\Policies\OrderPolicy;
+use App\Support\PanelMenu;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
@@ -30,6 +31,11 @@ class AppServiceProvider extends ServiceProvider
         // here rather than fetched again by every controller.
         View::composer('partials.storefront.*', function ($view) {
             $view->with('navCategories', Category::orderBy('name')->get());
+        });
+
+        // The staff sidebar is one component; only its entries differ by role.
+        View::composer('partials.panel.sidebar', function ($view) {
+            $view->with('panelMenu', PanelMenu::for(auth()->user()));
         });
     }
 }

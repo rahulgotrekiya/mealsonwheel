@@ -1,13 +1,14 @@
-@extends('layouts.shop')
+@extends('layouts.panel')
 
-@section('title', 'Merchant')
+@section('title', 'Dashboard')
 
 @section('content')
-    @include('partials.storefront.page-title', ['title' => 'Merchant panel'])
-
-    <section class="flat-spacing-11">
-        <div class="container">
-            <p>Signed in as {{ auth()->user()->full_name }} ({{ auth()->user()->role->label() }}).</p>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title mb-3">Welcome, {{ auth()->user()->full_name }}</h5>
+            <p class="text-muted mb-0">
+                You supply {{ auth()->user()->products()->count() }} products.
+            </p>
         </div>
-    </section>
+    </div>
 @endsection
