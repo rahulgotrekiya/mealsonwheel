@@ -38,6 +38,22 @@ return [
             'report' => false,
         ],
 
+        'products' => [
+            'driver' => 'local',
+            'root' => public_path('images/products'),
+            'url' => env('APP_URL').'/images/products',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
+        'categories' => [
+            'driver' => 'local',
+            'root' => public_path('images/categories'),
+            'url' => env('APP_URL').'/images/categories',
+            'visibility' => 'public',
+            'throw' => false,
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
