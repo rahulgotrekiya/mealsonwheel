@@ -1,0 +1,25 @@
+/*
+Template Name: Velzon - Admin & Dashboard Template
+Author: Themesbrand
+Website: https://themesbrand.com/
+Contact: support@themesbrand.com
+File: Custom Css File
+*/
+
+.text-primary {
+    --vz-text-opacity: 1;
+    color: #ff7433;
+}
+div.dataTables_wrapper div.dataTables_filter input[type="search"] {
+    max-width: 300px;
+  }
+
+  .card-body {
+    overflow: scroll;          /* Enable scrolling */
+    scrollbar-width: none;     /* Firefox: hides the scrollbar */
+    -ms-overflow-style: none;  /* Internet Explorer and Edge: hides the scrollbar */
+}
+
+.card-body ::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, and Opera: hides the scrollbar */
+}
