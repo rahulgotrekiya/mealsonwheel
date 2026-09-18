@@ -32,6 +32,8 @@ class PanelMenu
     {
         return [
             ['label' => 'Dashboard', 'icon' => 'mdi mdi-speedometer', 'route' => 'admin.dashboard'],
+            ['label' => 'Products', 'icon' => 'bx bxs-dog', 'route' => 'admin.products.index'],
+            ['label' => 'Categories', 'icon' => 'bx bx-category', 'route' => 'admin.categories.index'],
         ];
     }
 

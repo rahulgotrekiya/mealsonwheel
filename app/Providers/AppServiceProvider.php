@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use App\Models\Category;
 use App\Models\Order;
+use App\Models\Product;
 use App\Policies\OrderPolicy;
+use App\Policies\ProductPolicy;
 use App\Support\PanelMenu;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\View;
@@ -26,6 +28,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Gate::policy(Order::class, OrderPolicy::class);
+        Gate::policy(Product::class, ProductPolicy::class);
 
         // The category list is part of the site chrome, so it is bound once
         // here rather than fetched again by every controller.
