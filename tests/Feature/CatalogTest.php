@@ -238,7 +238,7 @@ class CatalogTest extends TestCase
 
         // Sections still being built. Each is asserted to be absent below, so
         // this list cannot quietly go stale as they arrive.
-        $notYetBuilt = ['/account', '/orders'];
+        $notYetBuilt = [];
 
         $checked = 0;
 
