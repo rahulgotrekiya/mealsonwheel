@@ -32,7 +32,7 @@
                     </form>
                     <div class="cart-checkout-btn">
                         @auth
-                            <a href="{{ url('/checkout') }}"
+                            <a href="{{ route('checkout') }}"
                                 class="tf-btn w-100 btn-fill animate-hover-btn radius-3 justify-content-center d-inline">
                                 <span>Check out</span>
                             </a>
