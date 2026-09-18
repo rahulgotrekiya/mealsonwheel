@@ -2,6 +2,8 @@
 
 namespace App\Enums;
 
+use Carbon\Carbon;
+
 enum OrderStatus: string
 {
     case Confirmed = 'confirmed';
@@ -34,5 +36,20 @@ enum OrderStatus: string
     public function isCancellable(): bool
     {
         return in_array($this, [self::Confirmed, self::Processing], true);
+    }
+
+    /**
+     * What to tell the customer about arrival, given when the order was placed.
+     */
+    public function estimatedDelivery(\DateTimeInterface $placedAt): string
+    {
+        return match ($this) {
+            self::Confirmed => Carbon::parse($placedAt)->addDays(5)->format('M d, Y'),
+            self::Processing => Carbon::parse($placedAt)->addDays(4)->format('M d, Y'),
+            self::Shipped => Carbon::parse($placedAt)->addDays(3)->format('M d, Y'),
+            self::Delivered => 'Delivered',
+            self::Cancelled => 'Order Cancelled',
+            self::Returned => 'Order Returned',
+        };
     }
 }
