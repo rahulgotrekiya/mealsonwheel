@@ -43,9 +43,9 @@
                                 <ul class="dropdown-menu menu-list" aria-labelledby="accountDropdown">
                                     @if (auth()->user()->isCustomer())
                                         <li class="d-block mx-3"><a class="menu-link-text link"
-                                                href="{{ url('/account') }}">My Account</a></li>
+                                                href="{{ route('account') }}">My Account</a></li>
                                         <li class="d-block mx-3"><a class="menu-link-text link"
-                                                href="{{ url('/orders') }}">Order History</a></li>
+                                                href="{{ route('orders.index') }}">Order History</a></li>
                                     @else
                                         <li class="d-block mx-3"><a class="menu-link-text link"
                                                 href="{{ auth()->user()->role->home() }}">Dashboard</a></li>

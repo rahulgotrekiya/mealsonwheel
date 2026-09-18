@@ -2,11 +2,14 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Shop\AccountController;
 use App\Http\Controllers\Shop\CartController;
 use App\Http\Controllers\Shop\CatalogController;
+use App\Http\Controllers\Shop\CheckoutController;
 use App\Http\Controllers\Shop\ContactController;
 use App\Http\Controllers\Shop\HomeController;
 use App\Http\Controllers\Shop\NewsletterController;
+use App\Http\Controllers\Shop\OrderController;
 use App\Http\Controllers\Shop\SearchController;
 use Illuminate\Support\Facades\Route;
 
@@ -44,6 +47,26 @@ Route::get('/contact', [ContactController::class, 'create'])->name('contact');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 Route::post('/newsletter', [NewsletterController::class, 'store'])->name('newsletter.store');
+
+/*
+ * Checking out, and everything that follows from it. Customers only: staff
+ * accounts have panels of their own and never hold a basket.
+ */
+Route::middleware(['auth', 'role:customer'])->group(function () {
+    Route::get('/checkout', [CheckoutController::class, 'create'])->name('checkout');
+    Route::post('/checkout/billing', [CheckoutController::class, 'storeBilling'])->name('checkout.billing');
+    Route::get('/checkout/payment', [CheckoutController::class, 'payment'])->name('checkout.payment');
+    Route::post('/checkout/payment', [CheckoutController::class, 'pay'])->name('checkout.pay');
+    Route::get('/checkout/confirmation/{order}', [CheckoutController::class, 'confirmation'])
+        ->name('checkout.confirmation');
+
+    Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
+    Route::patch('/orders/{order}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel');
+
+    Route::get('/account', [AccountController::class, 'edit'])->name('account');
+    Route::patch('/account', [AccountController::class, 'update'])->name('account.update');
+});
 
 /*
  * Sign-in and sign-up.

@@ -12,7 +12,7 @@
         </a>
     </div>
     <div class="toolbar-item">
-        <a href="{{ auth()->check() ? url('/account') : route('login') }}">
+        <a href="{{ auth()->check() ? route('account') : route('login') }}">
             <div class="toolbar-icon"><i class="icon-account"></i></div>
             <div class="toolbar-label">Account</div>
         </a>
