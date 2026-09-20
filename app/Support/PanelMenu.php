@@ -34,6 +34,8 @@ class PanelMenu
             ['label' => 'Dashboard', 'icon' => 'mdi mdi-speedometer', 'route' => 'admin.dashboard'],
             ['label' => 'Products', 'icon' => 'bx bxs-dog', 'route' => 'admin.products.index'],
             ['label' => 'Categories', 'icon' => 'bx bx-category', 'route' => 'admin.categories.index'],
+            ['label' => 'Orders', 'icon' => 'ri-shopping-bag-3-line', 'route' => 'admin.orders.index'],
+            ['label' => 'Users', 'icon' => 'mdi mdi-account-group-outline', 'route' => 'admin.users.index'],
         ];
     }
 
