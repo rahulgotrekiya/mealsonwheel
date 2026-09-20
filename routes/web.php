@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\Admin\CategoryController as AdminCategories;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
+use App\Http\Controllers\Admin\OrderController as AdminOrders;
 use App\Http\Controllers\Admin\ProductController as AdminProducts;
+use App\Http\Controllers\Admin\UserController as AdminUsers;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Shop\AccountController;
@@ -88,6 +90,12 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
     Route::resource('products', AdminProducts::class)->except('show');
     Route::resource('categories', AdminCategories::class)->except('show');
+
+    Route::get('orders', [AdminOrders::class, 'index'])->name('orders.index');
+    Route::get('orders/{order}', [AdminOrders::class, 'show'])->name('orders.show');
+    Route::patch('orders/{order}/status', [AdminOrders::class, 'updateStatus'])->name('orders.status');
+
+    Route::resource('users', AdminUsers::class)->except('show');
 });
 
 Route::middleware(['auth', 'role:merchant'])->prefix('merchant')->name('merchant.')->group(function () {
