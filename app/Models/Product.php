@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use App\Enums\ProductStatus;
+use App\Support\RichText;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -37,6 +39,28 @@ class Product extends Model
     }
 
     // Relationships
+
+    /*
+     * Rich text is cleaned on the way in rather than on the way out.
+     *
+     * A description is written in an editor and rendered as HTML rather than
+     * escaped, which makes it the one place where somebody else's markup
+     * reaches a customer's browser — and merchants sign themselves up, so that
+     * markup is not trustworthy.
+     *
+     * Cleaning here rather than in a controller covers every write: a form, a
+     * seeder, a console command, anything added later. There is no path that
+     * can put unsafe markup into the column.
+     */
+    protected function description(): Attribute
+    {
+        return Attribute::set(fn (?string $value) => RichText::clean($value));
+    }
+
+    protected function additionalInfo(): Attribute
+    {
+        return Attribute::set(fn (?string $value) => RichText::clean($value));
+    }
 
     public function category(): BelongsTo
     {
