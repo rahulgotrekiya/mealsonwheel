@@ -108,3 +108,66 @@ jobs:
 
       - name: Run tests
         run: php artisan test
+
+  docker:
+    name: Docker image
+    runs-on: ubuntu-latest
+
+    # Builds the release artifact and proves it actually serves, which the PHP
+    # jobs above cannot: they run the source tree directly and never exercise
+    # the image, its extensions, its document root or its permissions.
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Generate an application key
+        run: echo "APP_KEY=base64:$(openssl rand -base64 32)" >> "$GITHUB_ENV"
+
+      - name: Build and start the release stack
+        # The CI overlay drops the bind mount, so this runs what the image
+        # contains rather than the checked-out working tree.
+        run: docker compose -f compose.yaml -f compose.ci.yaml up -d --build --wait
+
+      - name: Migrate and seed
+        run: docker compose -f compose.yaml -f compose.ci.yaml exec -T app php artisan migrate --seed --force
+
+      - name: Smoke test
+        run: |
+          set -eu
+          fail=0
+          check() {
+            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 15 "http://localhost:8000$1")
+            if [ "$code" != "$2" ]; then
+              echo "::error::$1 returned $code, expected $2"
+              fail=1
+            else
+              echo "ok   $1 -> $code"
+            fi
+          }
+          check /up 200
+          check / 200
+          check /shop 200
+          check /login 200
+          check /become-a-supplier 200
+          check /cart 200
+          check /admin 302
+          check /assets/css/style.css 200
+
+          # APP_DEBUG is off in the release configuration, so an error page must
+          # not carry a stack trace.
+          if curl -s --max-time 15 http://localhost:8000/no-such-page | grep -qi 'stack trace'; then
+            echo "::error::debug details are exposed on error pages"
+            fail=1
+          fi
+
+          exit $fail
+
+      - name: Container logs
+        if: failure()
+        run: docker compose -f compose.yaml -f compose.ci.yaml logs --no-color
+
+      - name: Tear down
+        if: always()
+        run: docker compose -f compose.yaml -f compose.ci.yaml down -v
