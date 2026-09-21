@@ -2,6 +2,8 @@
 
 namespace App\Support;
 
+use App\Enums\ProductStatus;
+use App\Models\Product;
 use App\Models\User;
 
 /**
@@ -45,6 +47,12 @@ class PanelMenu
             ['label' => 'Dashboard', 'icon' => 'mdi mdi-speedometer', 'route' => 'admin.dashboard'],
             ['label' => 'Products', 'icon' => 'bx bxs-dog', 'route' => 'admin.products.index'],
             ['label' => 'Categories', 'icon' => 'bx bx-category', 'route' => 'admin.categories.index'],
+            [
+                'label' => 'Reviews',
+                'icon' => 'bx bx-check-shield',
+                'route' => 'admin.reviews.index',
+                'badge' => fn () => Product::where('status', ProductStatus::Pending)->count(),
+            ],
             ['label' => 'Orders', 'icon' => 'ri-shopping-bag-3-line', 'route' => 'admin.orders.index'],
             [
                 'label' => 'Merchants',
@@ -64,6 +72,8 @@ class PanelMenu
     {
         return [
             ['label' => 'Dashboard', 'icon' => 'mdi mdi-speedometer', 'route' => 'merchant.dashboard'],
+            ['label' => 'My Products', 'icon' => 'bx bxs-dog', 'route' => 'merchant.products.index'],
+            ['label' => 'Stock', 'icon' => 'bx bx-box', 'route' => 'merchant.stock.index'],
         ];
     }
 }

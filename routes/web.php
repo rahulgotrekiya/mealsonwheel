@@ -5,11 +5,14 @@ use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
 use App\Http\Controllers\Admin\MerchantApprovalController;
 use App\Http\Controllers\Admin\OrderController as AdminOrders;
 use App\Http\Controllers\Admin\ProductController as AdminProducts;
+use App\Http\Controllers\Admin\ProductReviewController;
 use App\Http\Controllers\Admin\UserController as AdminUsers;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\MerchantRegisterController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Merchant\DashboardController as MerchantDashboard;
+use App\Http\Controllers\Merchant\ProductController as MerchantProducts;
+use App\Http\Controllers\Merchant\StockController as MerchantStock;
 use App\Http\Controllers\Shop\AccountController;
 use App\Http\Controllers\Shop\CartController;
 use App\Http\Controllers\Shop\CatalogController;
@@ -107,8 +110,17 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('merchants', [MerchantApprovalController::class, 'index'])->name('merchants.index');
     Route::patch('merchants/{user}/approve', [MerchantApprovalController::class, 'approve'])->name('merchants.approve');
     Route::patch('merchants/{user}/reject', [MerchantApprovalController::class, 'reject'])->name('merchants.reject');
+
+    Route::get('reviews', [ProductReviewController::class, 'index'])->name('reviews.index');
+    Route::patch('reviews/{product}/approve', [ProductReviewController::class, 'approve'])->name('reviews.approve');
+    Route::patch('reviews/{product}/reject', [ProductReviewController::class, 'reject'])->name('reviews.reject');
 });
 
 Route::middleware(['auth', 'role:merchant'])->prefix('merchant')->name('merchant.')->group(function () {
     Route::get('/', MerchantDashboard::class)->name('dashboard');
+
+    Route::resource('products', MerchantProducts::class)->except('show');
+
+    Route::get('stock', [MerchantStock::class, 'index'])->name('stock.index');
+    Route::patch('stock/{product}', [MerchantStock::class, 'update'])->name('stock.update');
 });
