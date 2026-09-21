@@ -132,4 +132,52 @@ class SalesReport
             ->pluck('units', 'category')
             ->map(fn ($units) => (int) $units);
     }
+
+    /**
+     * Earnings broken down by supplier, for the admin view.
+     *
+     * One grouped query rather than a report per merchant, and the commission
+     * is summed at the rate each line was actually sold under.
+     *
+     * @return Collection<int, object>
+     */
+    public static function perSeller(): Collection
+    {
+        /*
+         * Deliberately the query builder rather than Eloquent.
+         *
+         * Hydrating an aggregate into OrderItem would let the model's own
+         * `commission` and `subtotal` accessors shadow the summed columns —
+         * they recompute per row from `commission_rate`, which a grouped query
+         * does not select, so every total would silently read as zero. Plain
+         * rows have no accessors to get in the way.
+         */
+        return DB::table('order_items')
+            ->join('users', 'users.id', '=', 'order_items.seller_id')
+            ->join('orders', 'orders.id', '=', 'order_items.order_id')
+            ->whereNotIn('orders.status', [
+                OrderStatus::Cancelled->value,
+                OrderStatus::Returned->value,
+            ])
+            ->groupBy('order_items.seller_id', 'users.firstname', 'users.lastname', 'users.email')
+            ->selectRaw('
+                order_items.seller_id,
+                users.firstname,
+                users.lastname,
+                users.email,
+                SUM(order_items.quantity) as units,
+                SUM(order_items.quantity * order_items.unit_price) as gross,
+                SUM(order_items.quantity * order_items.unit_price * order_items.commission_rate / 100) as commission
+            ')
+            ->orderByDesc('gross')
+            ->get()
+            ->map(function (object $row): object {
+                $row->units = (int) $row->units;
+                $row->gross = round((float) $row->gross, 2);
+                $row->commission = round((float) $row->commission, 2);
+                $row->net = round($row->gross - $row->commission, 2);
+
+                return $row;
+            });
+    }
 }

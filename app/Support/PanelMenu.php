@@ -61,6 +61,7 @@ class PanelMenu
                 // Surfaces waiting applications without having to open the screen.
                 'badge' => fn () => User::awaitingApproval()->count(),
             ],
+            ['label' => 'Earnings', 'icon' => 'bx bx-wallet', 'route' => 'admin.earnings'],
             ['label' => 'Users', 'icon' => 'mdi mdi-account-group-outline', 'route' => 'admin.users.index'],
         ];
     }
@@ -74,6 +75,7 @@ class PanelMenu
             ['label' => 'Dashboard', 'icon' => 'mdi mdi-speedometer', 'route' => 'merchant.dashboard'],
             ['label' => 'My Products', 'icon' => 'bx bxs-dog', 'route' => 'merchant.products.index'],
             ['label' => 'Stock', 'icon' => 'bx bx-box', 'route' => 'merchant.stock.index'],
+            ['label' => 'My Sales', 'icon' => 'bx bx-line-chart', 'route' => 'merchant.sales'],
         ];
     }
 }
