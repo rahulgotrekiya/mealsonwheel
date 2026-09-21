@@ -60,6 +60,7 @@
                         <ul class="footer-menu-list tf-collapse-content">
                             <li><a href="{{ route('privacy') }}" class="footer-menu_item">Privacy Policy</a></li>
                             <li><a href="{{ route('terms') }}" class="footer-menu_item">Terms &amp; Conditions</a></li>
+                            <li><a href="{{ route('merchant.register') }}" class="footer-menu_item">Become a Supplier</a></li>
                         </ul>
                     </div>
 

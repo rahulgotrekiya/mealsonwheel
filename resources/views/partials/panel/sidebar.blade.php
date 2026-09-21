@@ -31,6 +31,9 @@
                             href="{{ route($item['route']) }}">
                             <i class="{{ $item['icon'] }}"></i>
                             <span>{{ $item['label'] }}</span>
+                            @if (! empty($item['badge']))
+                                <span class="badge bg-danger ms-auto">{{ $item['badge'] }}</span>
+                            @endif
                         </a>
                     </li>
                 @endforeach
