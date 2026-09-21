@@ -2,11 +2,14 @@
 
 use App\Http\Controllers\Admin\CategoryController as AdminCategories;
 use App\Http\Controllers\Admin\DashboardController as AdminDashboard;
+use App\Http\Controllers\Admin\MerchantApprovalController;
 use App\Http\Controllers\Admin\OrderController as AdminOrders;
 use App\Http\Controllers\Admin\ProductController as AdminProducts;
 use App\Http\Controllers\Admin\UserController as AdminUsers;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\MerchantRegisterController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Merchant\DashboardController as MerchantDashboard;
 use App\Http\Controllers\Shop\AccountController;
 use App\Http\Controllers\Shop\CartController;
 use App\Http\Controllers\Shop\CatalogController;
@@ -85,6 +88,10 @@ Route::get('/register', [RegisterController::class, 'create'])->name('register')
 Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
 Route::post('/logout', [LoginController::class, 'destroy'])->middleware('auth')->name('logout');
 
+// Anyone may apply to supply; approval is what grants access.
+Route::get('/become-a-supplier', [MerchantRegisterController::class, 'create'])->name('merchant.register');
+Route::post('/become-a-supplier', [MerchantRegisterController::class, 'store'])->name('merchant.register.store');
+
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', AdminDashboard::class)->name('dashboard');
 
@@ -96,8 +103,12 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::patch('orders/{order}/status', [AdminOrders::class, 'updateStatus'])->name('orders.status');
 
     Route::resource('users', AdminUsers::class)->except('show');
+
+    Route::get('merchants', [MerchantApprovalController::class, 'index'])->name('merchants.index');
+    Route::patch('merchants/{user}/approve', [MerchantApprovalController::class, 'approve'])->name('merchants.approve');
+    Route::patch('merchants/{user}/reject', [MerchantApprovalController::class, 'reject'])->name('merchants.reject');
 });
 
 Route::middleware(['auth', 'role:merchant'])->prefix('merchant')->name('merchant.')->group(function () {
-    Route::view('/', 'merchant.dashboard')->name('dashboard');
+    Route::get('/', MerchantDashboard::class)->name('dashboard');
 });
