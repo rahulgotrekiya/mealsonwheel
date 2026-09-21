@@ -1,0 +1,23 @@
+# Overlay for continuous integration, and for checking a release build locally.
+#
+#   docker compose -f compose.yaml -f compose.ci.yaml up -d --build --wait
+#
+# The difference from development is the bind mount: it is dropped, so the
+# container runs the source and dependencies baked into the image rather than
+# whatever happens to be in the working tree. That is the artifact a deployment
+# would actually run.
+
+services:
+  app:
+    volumes: !reset []
+    build:
+      args:
+        # Release uid, not the developer's.
+        APP_UID: '33'
+    environment:
+      APP_ENV: production
+      APP_DEBUG: 'false'
+      APP_URL: http://localhost:8000
+      # No .env reaches the image, so the key is supplied here.
+      APP_KEY: ${APP_KEY}
+      LOG_CHANNEL: stderr
