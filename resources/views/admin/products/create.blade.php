@@ -5,7 +5,7 @@
 @section('content')
     <form method="POST" action="{{ route('admin.products.store') }}" enctype="multipart/form-data" autocomplete="off">
         @csrf
-        @include('partials.panel.product-form', ['submitLabel' => 'Add Product'])
+        @include('partials.panel.product-form', ['submitLabel' => 'Add Product', 'cancelUrl' => route('admin.products.index')])
     </form>
 @endsection
 

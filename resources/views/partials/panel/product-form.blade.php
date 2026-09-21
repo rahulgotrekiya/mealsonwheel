@@ -36,12 +36,14 @@
                         @error('price')<div class="invalid-feedback">{{ $message }}</div>@enderror
                     </div>
 
-                    <div class="col-md-4 mb-3">
-                        <label class="form-label" for="stock">Stock</label>
+                    @if ($showStock ?? true)
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label" for="stock">Stock</label>
                         <input type="number" min="0" class="form-control @error('stock') is-invalid @enderror"
                             id="stock" name="stock" value="{{ old('stock', $product?->stock ?? 0) }}" required>
-                        @error('stock')<div class="invalid-feedback">{{ $message }}</div>@enderror
-                    </div>
+                            @error('stock')<div class="invalid-feedback">{{ $message }}</div>@enderror
+                        </div>
+                    @endif
                 </div>
 
                 <div class="mb-3">
@@ -105,6 +107,6 @@
 </div>
 
 <div class="text-end mb-3">
-    <a href="{{ route('admin.products.index') }}" class="btn btn-light">Cancel</a>
+    <a href="{{ $cancelUrl }}" class="btn btn-light">Cancel</a>
     <button type="submit" class="btn btn-success w-sm">{{ $submitLabel }}</button>
 </div>

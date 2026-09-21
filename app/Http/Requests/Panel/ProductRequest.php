@@ -21,7 +21,7 @@ class ProductRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
             'category_id' => ['required', 'integer', 'exists:categories,id'],
             'price' => ['required', 'numeric', 'min:0', 'max:999999.99'],
-            'stock' => ['required', 'integer', 'min:0', 'max:99999'],
+            'stock' => ['sometimes', 'required', 'integer', 'min:0', 'max:99999'],
             'description' => ['required', 'string'],
             'additional_info' => ['nullable', 'string'],
 
