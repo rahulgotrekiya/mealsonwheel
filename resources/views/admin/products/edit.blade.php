@@ -7,7 +7,7 @@
         autocomplete="off">
         @csrf
         @method('PUT')
-        @include('partials.panel.product-form', ['submitLabel' => 'Save Changes'])
+        @include('partials.panel.product-form', ['submitLabel' => 'Save Changes', 'cancelUrl' => route('admin.products.index')])
     </form>
 @endsection
 
