@@ -36,7 +36,9 @@
                                         </span>
                                     </p>
                                 </div>
-                                <div class="ms-auto">
+                                <div class="ms-auto text-end">
+                                    <a href="{{ route('orders.invoice', $order) }}"
+                                        class="btn btn-light mb-2">Download invoice</a><br>
                                     @if ($order->isCancellable())
                                         <form method="POST" action="{{ route('orders.cancel', $order) }}"
                                             onsubmit="return confirm('Are you sure you want to cancel this order? This action cannot be undone.');">

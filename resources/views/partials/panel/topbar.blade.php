@@ -33,6 +33,21 @@
                     </button>
                 </div>
 
+                @if (auth()->user()->isAdmin())
+                    <div class="ms-1 header-item d-none dropdown d-sm-flex">
+                        <button type="button" class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle shadow-none"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bx bxs-report fs-22"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><h6 class="dropdown-header">Download reports</h6></li>
+                            <li><a class="dropdown-item" href="{{ route('admin.reports.orders') }}">Orders</a></li>
+                            <li><a class="dropdown-item" href="{{ route('admin.reports.earnings') }}">Merchant earnings</a></li>
+                            <li><a class="dropdown-item" href="{{ route('admin.reports.users') }}">Accounts</a></li>
+                        </ul>
+                    </div>
+                @endif
+
                 <div class="ms-1 header-item d-none d-sm-flex">
                     <a href="{{ route('home') }}"
                         class="btn btn-icon btn-topbar btn-ghost-secondary rounded-circle shadow-none">

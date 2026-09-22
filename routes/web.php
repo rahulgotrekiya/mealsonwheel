@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\MerchantApprovalController;
 use App\Http\Controllers\Admin\OrderController as AdminOrders;
 use App\Http\Controllers\Admin\ProductController as AdminProducts;
 use App\Http\Controllers\Admin\ProductReviewController;
+use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\UserController as AdminUsers;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\MerchantRegisterController;
@@ -21,6 +22,7 @@ use App\Http\Controllers\Shop\CatalogController;
 use App\Http\Controllers\Shop\CheckoutController;
 use App\Http\Controllers\Shop\ContactController;
 use App\Http\Controllers\Shop\HomeController;
+use App\Http\Controllers\Shop\InvoiceController;
 use App\Http\Controllers\Shop\NewsletterController;
 use App\Http\Controllers\Shop\OrderController;
 use App\Http\Controllers\Shop\SearchController;
@@ -76,6 +78,7 @@ Route::middleware(['auth', 'role:customer'])->group(function () {
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
     Route::patch('/orders/{order}/cancel', [OrderController::class, 'cancel'])->name('orders.cancel');
+    Route::get('/orders/{order}/invoice', InvoiceController::class)->name('orders.invoice');
 
     Route::get('/account', [AccountController::class, 'edit'])->name('account');
     Route::patch('/account', [AccountController::class, 'update'])->name('account.update');
@@ -114,6 +117,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::patch('merchants/{user}/reject', [MerchantApprovalController::class, 'reject'])->name('merchants.reject');
 
     Route::get('earnings', EarningsController::class)->name('earnings');
+
+    Route::get('reports/orders', [ReportController::class, 'orders'])->name('reports.orders');
+    Route::get('reports/users', [ReportController::class, 'users'])->name('reports.users');
+    Route::get('reports/earnings', [ReportController::class, 'earnings'])->name('reports.earnings');
 
     Route::get('reviews', [ProductReviewController::class, 'index'])->name('reviews.index');
     Route::patch('reviews/{product}/approve', [ProductReviewController::class, 'approve'])->name('reviews.approve');
