@@ -15,12 +15,13 @@ class UserSeeder extends Seeder
         $admin = User::updateOrCreate(
             ['email' => 'admin@mealsonwheels.test'],
             [
-                'firstname' => 'Aarav',
-                'lastname' => 'Shah',
+                'firstname' => 'Rahul',
+                'lastname' => 'Gotrekiya',
                 'password' => 'password',
                 'role' => UserRole::Admin,
                 'status' => UserStatus::Active,
                 'phone' => '9876543210',
+                'photo' => 'users/admin.jpg',
             ]
         );
 
